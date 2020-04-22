@@ -1,0 +1,39 @@
+import RPi.GPIO as GPIO
+from time import sleep
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+
+Enable = 13
+Motor_clock = 11
+Motor_counter = 7
+
+GPIO.setup(Enable, GPIO.OUT)
+GPIO.setup(Motor_clock, GPIO.OUT)
+GPIO.setup(Motor_counter, GPIO.OUT)
+
+Pwm = GPIO.PWM(Enable, 100) # Set frequency
+
+# Clock wise spin
+print ("motor on clock wise")
+Pwm.start(100)  # 100 %
+GPIO.output(Motor_clock, 1)
+GPIO.output(Motor_counter, 0)
+
+sleep(20)
+
+print ("motor off")
+GPIO.output(Motor_clock, 0)
+
+sleep(2)
+
+# Counter Clock wise spin
+print("motor on counter clock wise")
+Pwm.start(50) # 50 %
+GPIO.output(Motor_clock, 0)
+GPIO.output(Motor_counter, 1)
+
+sleep(20)
+
+print("motor off")
+GPIO.output(Motor_counter, 0)
